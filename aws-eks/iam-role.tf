@@ -12,3 +12,17 @@ resource "aws_iam_role" "test_cluster" {
     }]
   })
 }
+
+resource "aws_iam_role" "test_worker" {
+    name = "${local.cluster_name}-eks-worker-role"
+
+    assume_role_policy = jsonencode({
+        Statement = [{
+            Effect = "Allow",
+            Action = "sts:AssumeRole",
+            Principal = {
+                Service = "ec2.amazonaws.com"
+            }
+        }]
+    })
+}
