@@ -1,0 +1,8 @@
+provider "aws" {
+  region = "ap-northeast-2"
+}
+
+resource "aws_instance" "example" {
+    ami           = "ami-0c1508b5372d244d7"
+    instance_type = var.instance_type
+}
