@@ -3,4 +3,8 @@ resource "aws_instance" "example" {
     instance_type = var.instance_type
 
     subnet_id = module.vpc.public_subnets[0]
+
+    tags = {
+        Name = "example"
+    }
 }
