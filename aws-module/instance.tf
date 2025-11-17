@@ -6,6 +6,10 @@ resource "aws_instance" "example" {
     vpc_security_group_ids = [aws_security_group.allow_ssh.id]
     key_name               = aws_key_pair.temp-key.key_name
 
+    user_data = templatefile("${path.module}/templates/example.tpl", {
+      "region" = var.aws_region
+    })
+
     tags = {
         Name = "example"
     }
