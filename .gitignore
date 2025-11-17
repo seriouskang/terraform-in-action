@@ -7,3 +7,7 @@
 
 # lock file
 .terraform.lock.hcl
+
+# ssh key
+temp-key
+temp-key.pub
