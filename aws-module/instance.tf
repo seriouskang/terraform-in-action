@@ -2,8 +2,9 @@ resource "aws_instance" "example" {
     ami           = "ami-0c1508b5372d244d7"
     instance_type = var.instance_type
 
-    subnet_id = module.vpc.public_subnets[0]
+    subnet_id              = module.vpc.public_subnets[0]
     vpc_security_group_ids = [aws_security_group.allow_ssh.id]
+    key_name               = aws_key_pair.mykey.key_name
 
     tags = {
         Name = "example"
@@ -19,7 +20,7 @@ resource "aws_security_group" "allow_ssh" {
     from_port        = 22
     to_port          = 22
     protocol         = "tcp"
-    cidr_blocks      = ["193.186.4.0/24"]
+    cidr_blocks      = ["0.0.0.0/0"]
   }
 
   egress {
@@ -33,4 +34,9 @@ resource "aws_security_group" "allow_ssh" {
   tags = {
     Name = "allow_ssh"
   }
+}
+
+resource "aws_key_pair" "mykey" {
+  key_name   = "mykey-demo"
+  public_key = "NEED TO FILL"
 }
