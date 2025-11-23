@@ -6,9 +6,23 @@ resource "aws_instance" "example" {
     vpc_security_group_ids = [aws_security_group.allow_ssh.id]
     key_name               = aws_key_pair.temp-key.key_name
 
-    user_data = templatefile("${path.module}/templates/example.tpl", {
-      "region" = var.aws_region
-    })
+    # user_data = templatefile("${path.module}/templates/example.tpl", {
+    #   "region" = var.aws_region
+    # })
+
+    connection {
+      type     = "ssh"
+      user     = "ec2-user"
+      private_key = file("${path.module}/temp-key")
+      host     = self.public_ip
+    }
+  
+    provisioner "remote-exec" {
+      inline = [
+        "sudo yum update",
+        "sudo yum install -y nginx",
+      ]
+    }
 
     tags = {
         Name = "example"
