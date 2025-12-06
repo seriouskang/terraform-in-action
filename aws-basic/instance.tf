@@ -7,6 +7,9 @@ resource "aws_instance" "example" {
   vpc_security_group_ids = [aws_security_group.allow-ssh.id]
 
   key_name = aws_key_pair.mykeypair.key_name
+  user_data = templatefile("${path.module}/scripts/init.sh", {
+    DEVICE = "${var.INSTANCE_DEVICE_NAME}"
+  })
 }
 
 resource "aws_ebs_volume" "ebs-volume-1" {
@@ -20,7 +23,7 @@ resource "aws_ebs_volume" "ebs-volume-1" {
 }
 
 resource "aws_volume_attachment" "ebs-volume-1-attachment" {
-  device_name = "/dev/xvdh"
+  device_name = "${var.INSTANCE_DEVICE_NAME}"
   volume_id = "${aws_ebs_volume.ebs-volume-1.id}"
   instance_id = "${aws_instance.example.id}"
 }
