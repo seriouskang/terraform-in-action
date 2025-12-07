@@ -63,7 +63,8 @@ resource "aws_iam_role_policy" "s3-test-bucket-role-policy" {
         "s3:*"
       ],
       "Resource": [
-          "arn:aws:s3:::test-bucket-251207"
+          "arn:aws:s3:::test-bucket-251207",
+          "arn:aws:s3:::test-bucket-251207/*"
       ]
     }
   ]
