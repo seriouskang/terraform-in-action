@@ -71,3 +71,8 @@ resource "aws_iam_role_policy" "s3-test-bucket-role-policy" {
 EOF
 
 }
+
+resource "aws_iam_instance_profile" "s3-test-bucket-role-instanceprofile" {
+  name = "s3-test-bucket-role"
+  role = aws_iam_role.s3-test-bucket-role.name
+}

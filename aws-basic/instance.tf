@@ -10,6 +10,8 @@ resource "aws_instance" "example" {
   user_data = templatefile("${path.module}/scripts/init.sh", {
     DEVICE = "${var.INSTANCE_DEVICE_NAME}"
   })
+
+  iam_instance_profile = aws_iam_instance_profile.s3-test-bucket-role-instanceprofile.name
 }
 
 resource "aws_ebs_volume" "ebs-volume-1" {
