@@ -11,3 +11,6 @@
 # ssh key
 temp-key
 temp-key.pub
+
+# tf vars
+terraform.tfvars
