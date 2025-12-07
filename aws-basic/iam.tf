@@ -19,15 +19,8 @@ resource "aws_iam_group_membership" "admin-users" {
   group = "${aws_iam_group.admin.name}"
 }
 
-resource "aws_iam_policy_attachment" "admin-attach" {
-  name = "admin-attach"
-  groups = [
-    "${aws_iam_group.admin.name}"
-  ]
-  users = [
-    "admin",
-    "tf-user"
-  ]
+resource "aws_iam_group_policy_attachment" "admin-attach" {
+  group      = "${aws_iam_group.admin.name}"
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }
 
