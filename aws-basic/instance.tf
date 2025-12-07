@@ -1,6 +1,6 @@
 resource "aws_instance" "example" {
-  ami           = "ami-04fcc2023d6e37430"
-  instance_type = "t2.micro"
+  ami           = "${var.INSTANCE_AMI}"
+  instance_type = "${var.INSTANCE_TYPE}"
 
   subnet_id = "${aws_subnet.main-public-1.id}"
 
