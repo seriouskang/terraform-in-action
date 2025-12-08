@@ -33,6 +33,6 @@ variable "ami_id" {
     default = "ami-04fcc2023d6e37430"
 }
 
-variable "key_name" {
+variable "public_key" {
     type = string
 }
