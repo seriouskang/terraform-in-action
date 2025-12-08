@@ -41,6 +41,11 @@ resource "aws_route" "vpc_c_internet" {
   gateway_id             = aws_internet_gateway.vpc_c_igw.id
 }
 
+resource "aws_route_table_association" "vpc_c_subnet" {
+  subnet_id      = aws_subnet.vpc_c_subnet.id
+  route_table_id = aws_route_table.vpc_c_public.id
+}
+
 resource "aws_security_group" "vpc_c" {
   name_prefix = "tgw-lab-vpc-c-"
   vpc_id      = aws_vpc.vpc_c.id
