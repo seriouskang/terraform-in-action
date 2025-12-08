@@ -40,3 +40,51 @@ resource "aws_route" "vpc_c_internet" {
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.vpc_c_igw.id
 }
+
+resource "aws_security_group" "vpc_c" {
+  name_prefix = "tgw-lab-vpc-c-"
+  vpc_id      = aws_vpc.vpc_c.id
+
+  ingress {
+    description = "SSH from local"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [var.my_ip]
+  }
+
+  ingress {
+    description = "HTTP from local, VPC A and B"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = [
+      var.my_ip,
+      var.vpc_a_cidr,
+      var.vpc_b_cidr
+    ]
+  }
+
+  ingress {
+    description = "ICMP FROM VPC A and B"
+    from_port   = -1
+    to_port     = -1
+    protocol    = "icmp"
+    cidr_blocks = [
+      var.vpc_a_cidr,
+      var.vpc_b_cidr
+    ]
+  }
+
+  egress {
+    description = "ALLOW all outbound"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "tgw-lab-vpc-c-sg"
+  }
+}

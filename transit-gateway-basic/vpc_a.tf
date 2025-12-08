@@ -46,6 +46,7 @@ resource "aws_security_group" "vpc_a" {
   vpc_id      = aws_vpc.vpc_a.id
 
   ingress {
+    description = "SSH from local"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -53,6 +54,7 @@ resource "aws_security_group" "vpc_a" {
   }
 
   ingress {
+    description = "HTTP from local, VPC B and C"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
@@ -64,6 +66,7 @@ resource "aws_security_group" "vpc_a" {
   }
 
   ingress {
+    description = "ICMP FROM VPC B and C"
     from_port   = -1
     to_port     = -1
     protocol    = "icmp"
@@ -74,6 +77,7 @@ resource "aws_security_group" "vpc_a" {
   }
 
   egress {
+    description = "ALLOW all outbound"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
