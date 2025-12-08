@@ -41,6 +41,14 @@ resource "aws_route" "vpc_b_internet" {
   gateway_id             = aws_internet_gateway.vpc_b_igw.id
 }
 
+resource "aws_route" "vpc_b_to_vpc_a" {
+  route_table_id         = aws_route_table.vpc_b_public.id
+  destination_cidr_block = var.vpc_a_cidr
+  transit_gateway_id     = aws_ec2_transit_gateway.main.id
+
+  depends_on = [aws_ec2_transit_gateway_vpc_attachment.vpc_b]
+}
+
 resource "aws_route_table_association" "vpc_b_subnet" {
   subnet_id      = aws_subnet.vpc_b_subnet.id
   route_table_id = aws_route_table.vpc_b_public.id
