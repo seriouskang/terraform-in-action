@@ -93,3 +93,24 @@ resource "aws_security_group" "vpc_b" {
     Name = "tgw-lab-vpc-b-sg"
   }
 }
+
+resource "aws_instance" "vpc_b_instance" {
+  ami                    = var.ami_id
+  instance_type          = var.instance_type
+  subnet_id              = aws_subnet.vpc_b_subnet.id
+  vpc_security_group_ids = [aws_security_group.vpc_b.id]
+  key_name               = aws_key_pair.test-key-pair.key_name
+
+  user_data = templatefile(
+    "${path.module}/scripts/init.sh", 
+    {VPC = "VPC B"}
+  )
+
+  tags = {
+    Name = "tgw-lab-vpc-b-instance"
+  }
+}
+
+output "vpc_b_instance" {
+  value = aws_instance.vpc_b_instance.public_ip
+}
