@@ -119,6 +119,10 @@ resource "aws_instance" "vpc_b_instance" {
   }
 }
 
-output "vpc_b_instance" {
+output "vpc_b_instance_public_ip" {
   value = aws_instance.vpc_b_instance.public_ip
+}
+
+output "vpc_b_instance_private_ip" {
+  value = aws_instance.vpc_b_instance.private_ip
 }
