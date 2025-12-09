@@ -49,6 +49,14 @@ resource "aws_route" "vpc_c_to_vpc_a" {
   depends_on = [aws_ec2_transit_gateway_vpc_attachment.vpc_c]
 }
 
+resource "aws_route" "vpc_c_to_vpc_b" {
+  route_table_id         = aws_route_table.vpc_c_public.id
+  destination_cidr_block = var.vpc_b_cidr
+  transit_gateway_id     = aws_ec2_transit_gateway.main.id
+
+  depends_on = [aws_ec2_transit_gateway_vpc_attachment.vpc_c]
+}
+
 resource "aws_route_table_association" "vpc_c_subnet" {
   subnet_id      = aws_subnet.vpc_c_subnet.id
   route_table_id = aws_route_table.vpc_c_public.id
